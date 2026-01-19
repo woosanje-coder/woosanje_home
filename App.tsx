@@ -14,10 +14,9 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const [config, setConfig] = useState<SiteConfig>(INITIAL_SITE_CONFIG);
   const [rooms, setRooms] = useState<Room[]>(INITIAL_ROOMS);
-  const [amenities] = useState<Amenity[]>(INITIAL_AMENITIES);
+  const [amenities, setAmenities] = useState<Amenity[]>(INITIAL_AMENITIES);
   const [news, setNews] = useState<NewsItem[]>(INITIAL_NEWS);
 
-  // Intersection Observer for reveal animations
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -49,7 +48,6 @@ const App: React.FC = () => {
       case 'home':
         return (
           <div className="animate-fadeIn">
-            {/* Elegant Hero Section */}
             <section className="relative h-screen flex items-center justify-center overflow-hidden">
               <div className="absolute inset-0 z-0">
                 <img 
@@ -80,7 +78,6 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* Marquee Text Section */}
             <div className="marquee-container bg-black border-y border-white/5">
               <div className="marquee-content">
                 {[...Array(10)].map((_, i) => (
@@ -91,60 +88,29 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Continuous Portfolio Slider */}
             <section className="py-32 bg-[#080808] overflow-hidden">
               <div className="container mx-auto px-6 mb-16 flex justify-between items-end reveal">
                 <div>
-                  <h2 className="text-4xl serif mb-4">우산정사의 사계</h2>
+                  <h2 className="text-4xl serif mb-4 text-white">우산정사의 사계</h2>
                   <p className="text-gray-500 tracking-widest uppercase text-xs">A Visual Journey Through Our Space</p>
                 </div>
-                <button onClick={() => setCurrentPage('rooms')} className="text-xs tracking-widest border-b border-royal-purple pb-1 hover:text-royal-purple transition-all">VIEW ALL ROOMS</button>
+                <button onClick={() => setCurrentPage('rooms')} className="text-xs tracking-widest border-b border-royal-purple pb-1 text-white hover:text-royal-purple transition-all uppercase">VIEW ALL ROOMS</button>
               </div>
               
               <div className="portfolio-slider">
                 {[...portfolioItems, ...portfolioItems].map((item, index) => (
                   <div key={`${item.id}-${index}`} className="w-[300px] md:w-[450px] px-4 flex-shrink-0 group">
                     <div className="relative aspect-[3/4] overflow-hidden rounded-sm grayscale group-hover:grayscale-0 transition-all duration-1000">
-                      <img src={item.img} className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" alt={item.title} />
+                      <img src={item.img} className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" />
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                          <div className="text-center translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                           <p className="serif text-2xl mb-2">{item.title}</p>
+                           <p className="serif text-2xl mb-2 text-white">{item.title}</p>
                            <div className="w-8 h-[1px] bg-royal-purple mx-auto"></div>
                          </div>
                       </div>
                     </div>
                   </div>
                 ))}
-              </div>
-            </section>
-
-            {/* Subtle Detail Section */}
-            <section className="py-40 container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
-              <div className="reveal">
-                <span className="text-royal-purple tracking-widest text-xs font-bold uppercase mb-4 block">Philosophy</span>
-                <h2 className="text-5xl serif mb-8 leading-tight">가장 비우는 것으로<br/>가장 채우는 시간</h2>
-                <p className="text-gray-400 leading-relaxed font-light text-lg mb-8">
-                  우산정사의 건축은 덜어냄의 미학에서 시작되었습니다. 여백의 공간을 통해 자연의 소리가 들리고, 
-                  빛의 그림자가 예술이 되는 순간을 선사합니다. 
-                </p>
-                <div className="flex gap-12">
-                   <div>
-                     <p className="text-2xl serif mb-1">01</p>
-                     <p className="text-xs text-gray-500 tracking-tighter uppercase">Authentic Heritage</p>
-                   </div>
-                   <div>
-                     <p className="text-2xl serif mb-1">02</p>
-                     <p className="text-xs text-gray-500 tracking-tighter uppercase">Modern Luxury</p>
-                   </div>
-                   <div>
-                     <p className="text-2xl serif mb-1">03</p>
-                     <p className="text-xs text-gray-500 tracking-tighter uppercase">Soulful Silence</p>
-                   </div>
-                </div>
-              </div>
-              <div className="relative reveal">
-                <div className="aspect-square rounded-full border border-white/5 absolute -top-10 -right-10 w-full animate-pulse"></div>
-                <img src="https://images.unsplash.com/photo-1582719471327-5a3241bb93e5?q=80&w=1200" className="rounded-2xl shadow-2xl relative z-10 grayscale hover:grayscale-0 transition-all duration-1000" alt="Detail" />
               </div>
             </section>
           </div>
@@ -155,29 +121,26 @@ const App: React.FC = () => {
           <section className="pt-48 pb-32 container mx-auto px-6 animate-fadeIn">
             <header className="max-w-3xl mb-20">
                <span className="text-royal-purple tracking-widest text-xs font-bold uppercase mb-4 block">Our Spaces</span>
-               <h2 className="text-6xl serif mb-6">품격 있는 휴식</h2>
-               <p className="text-gray-500 font-light text-xl">각기 다른 테마로 디자인된 두 가지 프리미엄 한옥 객실을 소개합니다.</p>
+               <h2 className="text-6xl serif mb-6 text-white">품격 있는 휴식</h2>
+               <p className="text-gray-500 font-light text-xl">각기 다른 테마로 디자인된 {rooms.length}가지 프리미엄 한옥 객실을 소개합니다.</p>
             </header>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-24">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-white">
               {rooms.map(room => (
                 <div key={room.id} className="group cursor-pointer reveal">
-                  <div className="overflow-hidden aspect-[16/10] mb-8 relative">
+                  <div className="overflow-hidden aspect-[16/10] mb-8 relative rounded-sm">
                     <img 
                       src={room.image} 
                       className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" 
                       alt={room.name}
                     />
-                    <div className="absolute top-6 left-6 glass px-4 py-2 text-xs tracking-widest">PREMIUM SUITE</div>
+                    <div className="absolute top-4 left-4 glass px-3 py-1 text-[10px] tracking-widest uppercase">PREMIUM STAY</div>
                   </div>
                   <div className="flex justify-between items-baseline border-b border-white/10 pb-4 mb-6">
-                    <h3 className="text-3xl serif">{room.name}</h3>
-                    <span className="text-royal-purple font-light italic text-sm">from ₩{room.price.toLocaleString()}</span>
+                    <h3 className="text-2xl serif">{room.name}</h3>
+                    <span className="text-royal-purple font-light italic text-sm">₩{room.price.toLocaleString()}</span>
                   </div>
-                  <p className="text-gray-400 mb-8 font-light leading-relaxed">{room.description}</p>
-                  <button onClick={() => setCurrentPage('booking')} className="group flex items-center gap-4 text-xs tracking-[0.3em] font-bold">
-                    BOOK THIS ROOM 
-                    <i className="fas fa-arrow-right text-royal-purple group-hover:translate-x-2 transition-transform"></i>
-                  </button>
+                  <p className="text-gray-400 mb-6 font-light leading-relaxed text-sm h-12 line-clamp-2">{room.description}</p>
+                  <button onClick={() => setCurrentPage('booking')} className="text-[10px] tracking-[0.2em] font-bold text-white hover:text-royal-purple transition-colors border-b border-white/20 pb-1">INQUIRE NOW</button>
                 </div>
               ))}
             </div>
@@ -187,12 +150,12 @@ const App: React.FC = () => {
       case 'amenities':
         return (
           <section className="pt-48 pb-32 container mx-auto px-6 animate-fadeIn">
-            <h2 className="text-5xl serif mb-20 text-center">공간의 완성</h2>
-            <div className="space-y-40">
+            <h2 className="text-5xl serif mb-20 text-center text-white">공간의 완성</h2>
+            <div className="space-y-40 text-white">
               {amenities.map((amen, idx) => (
                 <div key={amen.id} className={`flex flex-col ${idx % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-24 reveal`}>
                   <div className="w-full md:w-[60%] overflow-hidden">
-                    <img src={amen.image} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-[0_20px_50px_rgba(120,81,169,0.1)]" alt={amen.title} />
+                    <img src={amen.image} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-[0_20px_50px_rgba(120,81,169,0.1)]" />
                   </div>
                   <div className="w-full md:w-[40%] space-y-8">
                     <span className="text-royal-purple text-5xl font-light italic opacity-50">0{idx + 1}</span>
@@ -208,20 +171,13 @@ const App: React.FC = () => {
 
       case 'community':
         return (
-          <section className="pt-48 pb-32 container mx-auto px-6 animate-fadeIn">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-               <h2 className="text-6xl serif">Journal</h2>
-               <div className="flex gap-4">
-                  <span className="px-4 py-2 border border-white/10 rounded-full text-xs hover:border-royal-purple transition-all cursor-pointer">ALL POSTS</span>
-                  <span className="px-4 py-2 border border-white/10 rounded-full text-xs hover:border-royal-purple transition-all cursor-pointer">EVENTS</span>
-                  <span className="px-4 py-2 border border-white/10 rounded-full text-xs hover:border-royal-purple transition-all cursor-pointer">STORY</span>
-               </div>
-            </div>
+          <section className="pt-48 pb-32 container mx-auto px-6 animate-fadeIn text-white">
+            <h2 className="text-6xl serif mb-20">Journal</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
               {news.map(item => (
                 <div key={item.id} className="group cursor-pointer reveal">
                   <div className="aspect-[16/9] overflow-hidden mb-8">
-                     <img src={item.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={item.title} />
+                     <img src={item.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   </div>
                   <div className="space-y-4">
                     <span className="text-xs text-royal-purple tracking-widest font-bold uppercase">{item.date}</span>
@@ -236,57 +192,38 @@ const App: React.FC = () => {
 
       case 'booking':
         return (
-          <section className="pt-48 pb-32 container mx-auto px-6 max-w-5xl animate-fadeIn">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-24">
-               <div className="lg:col-span-1 reveal">
-                  <h2 className="text-5xl serif mb-8">예약 문의</h2>
-                  <p className="text-gray-500 font-light mb-12">
-                    우산정사의 고요함 속에서 진정한 휴식을 경험해보세요. <br/>
-                    문의 사항을 남겨주시면 소중히 답변해 드리겠습니다.
-                  </p>
-                  <div className="space-y-6">
-                     <div>
-                       <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">Inquiry</p>
-                       <p className="text-lg serif">054-123-4567</p>
-                     </div>
-                     <div>
-                       <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">Email</p>
-                       <p className="text-lg serif">reserve@usanjeongsa.com</p>
-                     </div>
-                  </div>
-               </div>
-               <div className="lg:col-span-2 reveal">
-                  <form className="glass p-12 rounded-2xl space-y-10">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                      <div className="relative group">
-                        <input type="text" className="w-full bg-transparent border-b border-white/10 py-4 focus:border-royal-purple outline-none transition-colors" placeholder="NAME" />
-                        <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-royal-purple group-focus-within:w-full transition-all duration-500"></div>
-                      </div>
-                      <div className="relative group">
-                        <input type="tel" className="w-full bg-transparent border-b border-white/10 py-4 focus:border-royal-purple outline-none transition-colors" placeholder="PHONE" />
-                        <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-royal-purple group-focus-within:w-full transition-all duration-500"></div>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                      <div className="relative group">
-                        <input type="date" className="w-full bg-transparent border-b border-white/10 py-4 focus:border-royal-purple outline-none transition-colors" placeholder="CHECK-IN" />
-                      </div>
-                      <div className="relative group">
-                        <select className="w-full bg-transparent border-b border-white/10 py-4 focus:border-royal-purple outline-none transition-colors appearance-none">
-                          <option className="bg-black">SELECT ROOM</option>
-                          {rooms.map(r => <option key={r.id} className="bg-black">{r.name}</option>)}
-                        </select>
-                      </div>
-                    </div>
-                    <div className="relative group">
-                      <textarea rows={4} className="w-full bg-transparent border-b border-white/10 py-4 focus:border-royal-purple outline-none transition-colors resize-none" placeholder="MESSAGE"></textarea>
-                      <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-royal-purple group-focus-within:w-full transition-all duration-500"></div>
-                    </div>
-                    <button className="w-full py-6 bg-royal-purple text-white font-bold tracking-[0.4em] text-xs hover:brightness-125 transition-all">
-                      SEND REQUEST
-                    </button>
-                  </form>
-               </div>
+          <section className="pt-48 pb-32 container mx-auto px-6 max-w-5xl animate-fadeIn text-center text-white">
+            <span className="text-royal-purple tracking-widest text-xs font-bold uppercase mb-4 block reveal">Reservation</span>
+            <h2 className="text-6xl md:text-7xl serif mb-10 reveal">{config.bookingTitle}</h2>
+            <p className="text-gray-400 mb-16 text-xl font-light max-w-2xl mx-auto leading-relaxed reveal">
+              {config.bookingDescription}
+            </p>
+            
+            <div className="reveal">
+              <a 
+                href={config.bookingUrl} 
+                target={config.bookingUrl.startsWith('http') ? "_blank" : "_self"}
+                rel="noopener noreferrer"
+                className="inline-block group relative px-16 py-6 overflow-hidden rounded-full bg-royal-purple transition-all hover:scale-105 shadow-2xl shadow-royal-purple/20"
+              >
+                <span className="relative z-10 text-sm tracking-[0.4em] font-bold text-white uppercase">
+                  {config.bookingButtonText}
+                </span>
+                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </a>
+              
+              <div className="mt-20 pt-12 border-t border-white/5 grid grid-cols-1 md:grid-cols-2 gap-10 text-left">
+                <div className="glass p-8 rounded-2xl">
+                  <p className="text-xs text-gray-500 tracking-widest mb-4 font-bold uppercase">Customer Support</p>
+                  <p className="text-3xl serif mb-2">054-123-4567</p>
+                  <p className="text-sm text-gray-600">오전 10시 - 오후 6시 (월-금)</p>
+                </div>
+                <div className="glass p-8 rounded-2xl">
+                  <p className="text-xs text-gray-500 tracking-widest mb-4 font-bold uppercase">Bank Info</p>
+                  <p className="text-2xl serif mb-2">국민 123456-01-123456</p>
+                  <p className="text-sm text-gray-600">예금주: 우산정사</p>
+                </div>
+              </div>
             </div>
           </section>
         );
@@ -300,6 +237,8 @@ const App: React.FC = () => {
             onUpdateRooms={setRooms}
             news={news}
             onUpdateNews={setNews}
+            amenities={amenities}
+            onUpdateAmenities={setAmenities}
           />
         );
 
@@ -311,45 +250,9 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#050505]">
       <Navbar onNavigate={setCurrentPage} currentPage={currentPage} />
-      
-      <main>
-        {renderContent()}
-      </main>
-
-      <footer className="bg-black border-t border-white/5 pt-32 pb-16">
-        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-16">
-          <div className="md:col-span-6">
-            <h4 className="text-4xl serif mb-8">우산정사 (雨山亭舍)</h4>
-            <p className="text-gray-500 max-w-sm font-light leading-loose">
-              비 내리는 산속의 작은 집, <br />
-              시간의 흐름조차 고요히 머무는 곳입니다.
-              우리의 유산을 현대의 감각으로 재해석한 프리미엄 공간.
-            </p>
-          </div>
-          <div className="md:col-span-3">
-            <h5 className="text-xs uppercase tracking-widest text-royal-purple font-bold mb-8">Contact</h5>
-            <ul className="text-gray-500 space-y-4 font-light">
-              <li className="flex items-center gap-4"><i className="fas fa-map-marker-alt text-xs"></i> 안동시 한옥마을길 123</li>
-              <li className="flex items-center gap-4"><i className="fas fa-phone text-xs"></i> 054-123-4567</li>
-              <li className="flex items-center gap-4"><i className="fas fa-envelope text-xs"></i> contact@usanjeongsa.com</li>
-            </ul>
-          </div>
-          <div className="md:col-span-3">
-             <h5 className="text-xs uppercase tracking-widest text-royal-purple font-bold mb-8">Newsletter</h5>
-             <div className="flex border-b border-white/10 pb-2">
-                <input type="email" placeholder="EMAIL ADDRESS" className="bg-transparent text-xs w-full outline-none" />
-                <button className="text-royal-purple"><i className="fas fa-arrow-right"></i></button>
-             </div>
-          </div>
-        </div>
-        <div className="container mx-auto px-6 mt-32 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          <p className="text-[10px] text-gray-700 tracking-[0.5em] font-bold">© 2025 USANJEONGSA PREMIUM STAY</p>
-          <div className="flex gap-10 text-xs text-gray-700 tracking-widest">
-             <a href="#" className="hover:text-royal-purple">INSTAGRAM</a>
-             <a href="#" className="hover:text-royal-purple">FACEBOOK</a>
-             <a href="#" className="hover:text-royal-purple">YOUTUBE</a>
-          </div>
-        </div>
+      <main>{renderContent()}</main>
+      <footer className="bg-black border-t border-white/5 pt-20 pb-10 text-center">
+        <p className="text-[10px] text-gray-700 tracking-[0.5em] font-bold uppercase">© 2025 USANJEONGSA PREMIUM STAY</p>
       </footer>
     </div>
   );

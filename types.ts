@@ -30,4 +30,8 @@ export interface SiteConfig {
   heroSubtitle: string;
   primaryColor: string;
   brandName: string;
+  bookingTitle: string;
+  bookingDescription: string;
+  bookingButtonText: string;
+  bookingUrl: string;
 }
